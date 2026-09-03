@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 02 Eyl 2026, 19:34:00
+-- Üretim Zamanı: 03 Eyl 2026, 13:39:49
 -- Sunucu sürümü: 10.4.32-MariaDB
 -- PHP Sürümü: 8.3.30
 
@@ -153,7 +153,13 @@ INSERT INTO `color_product` (`id`, `color_id`, `product_id`, `created_at`, `upda
 (35, 8, 18, NULL, NULL),
 (36, 6, 19, NULL, NULL),
 (37, 7, 19, NULL, NULL),
-(38, 8, 19, NULL, NULL);
+(38, 8, 19, NULL, NULL),
+(39, 1, 2, NULL, NULL),
+(40, 2, 2, NULL, NULL),
+(41, 3, 2, NULL, NULL),
+(42, 6, 2, NULL, NULL),
+(43, 7, 2, NULL, NULL),
+(44, 8, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -233,7 +239,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2026_09_02_105837_create_categories_table', 1),
 (9, '2026_09_02_105848_create_products_table', 1),
 (10, '2026_09_02_110920_create_color_product_table', 1),
-(11, '2026_09_02_111102_create_product_size_table', 1);
+(11, '2026_09_02_111102_create_product_size_table', 1),
+(12, '2026_09_03_061231_create_personal_access_tokens_table', 2);
 
 -- --------------------------------------------------------
 
@@ -245,6 +252,25 @@ CREATE TABLE `password_reset_tokens` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `personal_access_tokens`
+--
+
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `name` text NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -272,7 +298,7 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `slug`, `name`, `category_id`, `price`, `quantity`, `description`, `thumbnail`, `created_at`, `updated_at`) VALUES
 (1, 'temporibus-aut-placeat', 'Temporibus aut placeat', 1, 872.50, 4, 'Odio eaque perferendis hic consequatur at id. Doloribus dolore animi fugiat ab illum dignissimos. Est fuga enim soluta neque ab quaerat nisi vel. Voluptatum consequatur odio rerum quibusdam odio quo facere.', 'storage/images/product/DRM6T7Gur9bnMdF9MEqpejZlFq7rTaEuheUvIAj7.jpg', '2026-09-02 16:24:47', '2026-09-02 16:25:53'),
-(2, 'rerum-sint-rerum', 'Rerum sint rerum', 4, 4590.82, 63, 'Vel explicabo id dolorem provident. Provident libero inventore aliquid. Cupiditate perferendis magni facilis id voluptatem aut. Et est et nam ipsum aut accusamus mollitia.', 'storage/images/product/oIFAPfV3jppko5w6rDq3Psb3ZA5pemgWXA14q5TW.jpg', '2026-09-02 16:24:47', '2026-09-02 16:26:01'),
+(2, 'rerum-sint-rerum', 'Rerum sint rerum', 4, 4590.82, 63, 'Vel explicabo id dolorem provident. Provident libero inventore aliquid. Cupiditate perferendis magni facilis id voluptatem aut. Et est et nam ipsum aut accusamus mollitia.', 'storage/images/product/AAMTmq1PpSHDem8CwcB5agoy3YXuCKzoWPkGXi19.jpg', '2026-09-02 16:24:47', '2026-09-03 09:21:17'),
 (3, 'consequatur-eum-quibusdam', 'Consequatur eum quibusdam', 5, 494.18, 30, 'Eum magnam deleniti dolores. Quia et quidem modi fugit est architecto et eligendi. Ad rerum aliquid nihil labore veritatis. Consequatur sunt facilis ex aut.', 'storage/images/product/855GDAPW1IyhDFK3PDE1ExOGOgZbzRFXNrZZ3lGE.jpg', '2026-09-02 16:24:47', '2026-09-02 16:26:08'),
 (4, 'quam-doloribus-magni', 'Quam doloribus magni', 4, 3227.40, 46, 'Est laborum nihil qui libero tenetur ad culpa qui. Autem et praesentium ullam non aliquid. Voluptatem sint voluptatum sed iusto nostrum rerum quis.', 'storage/images/product/vH3lppuCB58h3aLoX6HvtW7HtmIrvozOSHM2V1Jj.jpg', '2026-09-02 16:24:47', '2026-09-02 16:26:15'),
 (5, 'et-delectus-numquam', 'Et delectus numquam', 5, 2438.20, 62, 'Beatae itaque minima non optio. Repellendus id atque ducimus debitis qui cum aut. Deserunt maiores nihil suscipit voluptas facere ullam quod. Distinctio earum quo praesentium qui quibusdam.', 'storage/images/product/2TWpuVQ8lc6Q6kMpulH9AAUxqrbPmV0Za6NLm7S3.jpg', '2026-09-02 16:24:47', '2026-09-02 16:26:25'),
@@ -430,7 +456,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('3pIpyfv5XmMuqsY8KqvuiTls7BAvOAeVGXv22dfJ', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', 'eyJfdG9rZW4iOiJQb25iNTFrWWFtQWhPYnQyblB1ZHh1ZTkxOXhHZ0VGamNPRFRRaUZ4IiwiX2ZsYXNoIjp7Im5ldyI6W10sIm9sZCI6W119LCJfcHJldmlvdXMiOnsidXJsIjoiaHR0cDpcL1wvMTI3LjAuMC4xOjgwMDBcL2FkbWluXC9wcm9kdWN0Iiwicm91dGUiOiJhZG1pbi5wcm9kdWN0LmluZGV4In0sImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjoxfQ==', 1788377345);
+('iWuFrbYv6qux39knnlkUEjkINLy8cOpx5GV2RJwh', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', 'eyJfdG9rZW4iOiJPUHpKSXo3OFkyazgydUJrT2VJN2xjcURvYU9ZbUFaYzd3a3BzZUNhIiwiX3ByZXZpb3VzIjp7InVybCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwXC9hZG1pblwvcHJvZHVjdCIsInJvdXRlIjoiYWRtaW4ucHJvZHVjdC5pbmRleCJ9LCJfZmxhc2giOnsib2xkIjpbXSwibmV3IjpbXX0sImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjoxfQ==', 1788422394),
+('Zs7ECA9L3mgtt8Cwav9v95u4a0XidPiBrx7rJa1k', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', 'eyJfdG9rZW4iOiJsQjBLa2ZHQjlqZkNwbVZPZXUyUVQ1a01DSmcyT0g0U05ZbGtidlhKIiwiX2ZsYXNoIjp7Im5ldyI6W10sIm9sZCI6W119LCJfcHJldmlvdXMiOnsidXJsIjoiaHR0cDpcL1wvMTI3LjAuMC4xOjgwMDBcL2FkbWluXC9wcm9kdWN0Iiwicm91dGUiOiJhZG1pbi5wcm9kdWN0LmluZGV4In0sImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjoxfQ==', 1788438077);
 
 -- --------------------------------------------------------
 
@@ -563,6 +590,15 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Tablo için indeksler `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`),
+  ADD KEY `personal_access_tokens_expires_at_index` (`expires_at`);
+
+--
 -- Tablo için indeksler `products`
 --
 ALTER TABLE `products`
@@ -632,7 +668,7 @@ ALTER TABLE `colors`
 -- Tablo için AUTO_INCREMENT değeri `color_product`
 --
 ALTER TABLE `color_product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `failed_jobs`
@@ -650,7 +686,13 @@ ALTER TABLE `jobs`
 -- Tablo için AUTO_INCREMENT değeri `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- Tablo için AUTO_INCREMENT değeri `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `products`

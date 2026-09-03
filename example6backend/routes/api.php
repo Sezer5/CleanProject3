@@ -11,6 +11,7 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/products', [ProductController::class, "index"]);
 Route::get('/products/{color}/color', [ProductController::class, "getProductByColor"]);
+Route::get('/products/{category}/category', [ProductController::class, "getProductByCategory"]);
 Route::get('/products/{size}/size', [ProductController::class, "getProductBySize"]);
 Route::get('/products/{term}/term', [ProductController::class, "getProductByTerm"]);
 Route::get('/products/{product}/product', [ProductController::class, "getProductDetail"]);

@@ -34,6 +34,17 @@ class ProductController extends Controller
         ]);
     }
 
+    public function getProductByCategory(Category $category)
+    {
+        return ProductResource::collection(
+            $category->products()->with(['category', 'colors', 'sizes'])->latest()->get()
+        )->additional([
+            'categories' => Category::has('products')->latest()->get(),
+            'colors' => Color::has('products')->latest()->get(),
+            'sizes' => Size::has('products')->latest()->get()
+        ]);
+    }
+
     public function getProductBySize(Size $size)
     {
         return ProductResource::collection(
