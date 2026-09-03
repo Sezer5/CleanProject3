@@ -1,0 +1,41 @@
+    @extends('layouts.adminlayout')
+    @section('title')
+        Home
+    @endsection
+    @section('content')
+        <main class="p-4">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-12 mb-4">
+                        <div class="card p-3">
+                            <div class="card-header">
+                                <h3>Edit Color</h3>
+                            </div>
+                            <div class="card-body col-md-6">
+                                <form action="{{ route('admin.color.update', $color->slug) }}" method="post">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="mb-3">
+                                        <label for="" class="form-label ">Name</label>
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                            name="name" placeholder="Please enter name*"
+                                            value="{{ $color->name, old('name') }}" />
+                                        @error('name')
+                                            <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 text-end">
+                                        <button class="btn btn-success btn-sm" type="submit">Submit</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </main>
+    @endsection
