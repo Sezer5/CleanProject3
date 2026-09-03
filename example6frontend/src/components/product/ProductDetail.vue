@@ -51,8 +51,12 @@
               justifyContent: 'center',
               alignItems: 'center',
             }"
+            @click="data.chosenColor = color.name"
           >
-            <i class="bi bi-check-lg"></i>
+            <i
+              class="bi bi-check-lg"
+              v-if="data.chosenColor === color.name"
+            ></i>
           </div>
         </div>
       </div>
@@ -60,31 +64,36 @@
         <h5>Size:</h5>
         <div class="btn-group" role="group" aria-label="Color selection">
           <span
-            class="badge bg-secondary text-white border fs-6"
             v-for="size in productStore.productDetail?.sizes"
             :key="size.id"
             style="cursor: pointer"
+            @click="data.chosenSize = size.name"
+            :class="
+              data.chosenSize === size.name
+                ? 'badge bg-dark text-white border fs-6'
+                : 'badge bg-secondary text-white border fs-6'
+            "
             >{{ size.name }}</span
           >
         </div>
       </div>
       <div class="mb-4">
-        <h5>Quantity:</h5>
-        <input
-          type="number"
-          class="form-control"
-          id="quantity"
-          value="1"
-          min="1"
-          style="width: 80px"
-        />
+        <div>
+          <h5>Quantity:</h5>
+          <input
+            type="number"
+            class="form-control"
+            id="quantity"
+            v-model="data.chosenQty"
+            style="width: 80px"
+          />
+        </div>
+        <div class="mt-2">
+          <button class="btn btn-primary btn-lg mb-3 me-2">
+            <i class="bi bi-cart-plus"></i> Add to Cart
+          </button>
+        </div>
       </div>
-      <button class="btn btn-primary btn-lg mb-3 me-2">
-        <i class="bi bi-cart-plus"></i> Add to Cart
-      </button>
-      <button class="btn btn-outline-secondary btn-lg mb-3">
-        <i class="bi bi-heart"></i> Add to Wishlist
-      </button>
     </div>
   </div>
 </template>
@@ -102,7 +111,7 @@ const data = reactive({
   term: useRoute().params.slug,
   chosenColor: null,
   chosenSize: null,
-  chosenQty: 0,
+  chosenQty: 1,
 });
 
 onMounted(() => {
