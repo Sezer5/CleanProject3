@@ -6,7 +6,7 @@
           <div class="card-body p-4">
             <h3 class="text-center mb-4 fw-bold text-primary">Register</h3>
 
-            <form @submit.prevent="">
+            <form @submit.prevent="registerUser()">
               <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input
@@ -57,11 +57,35 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { BASE_URL } from "@/helpers/config";
+import axios from "axios";
+import { reactive } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 
 const formData = reactive({
   name: "",
   email: "",
   password: "",
 });
+
+const toast = useToast();
+
+const route = useRouter();
+
+const registerUser = async () => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/user/register`,
+      formData
+    );
+    toast.success(`User registered successfully`, {
+      timeout: 2000,
+    });
+    route.push("/login");
+  } catch (error) {
+    if (error.response.status === 422) {
+    }
+  }
+};
 </script>
