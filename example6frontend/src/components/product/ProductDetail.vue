@@ -89,7 +89,23 @@
           />
         </div>
         <div class="mt-2">
-          <button class="btn btn-primary btn-lg mb-3 me-2">
+          <button
+            class="btn btn-primary btn-lg mb-3 me-2"
+            :disabled="!data.chosenColor || !data.chosenSize"
+            @click="
+              cartStore.addToCart({
+                ref: makeUniqueId(10),
+                product_id: productStore.productDetail?.id,
+                name: productStore.productDetail?.name,
+                maxQty: productStore.productDetail?.quantity,
+                thumbnail: productStore.productDetail?.thumbnail,
+                price: productStore.productDetail?.price,
+                color: data.chosenColor,
+                size: data.chosenSize,
+                Qty: data.chosenQty,
+              })
+            "
+          >
             <i class="bi bi-cart-plus"></i> Add to Cart
           </button>
         </div>
@@ -103,9 +119,11 @@ import { useProductStore } from "@/stores/useProductStore";
 import { onMounted, reactive } from "vue";
 import { useRoute } from "vue-router";
 import Spinner from "../layouts/Spinner.vue";
-import { BASE_URL } from "@/helpers/config";
+import { BASE_URL, makeUniqueId } from "@/helpers/config";
+import { useCartStore } from "@/stores/useCartStore.js";
 
 const productStore = useProductStore();
+const cartStore = useCartStore();
 
 const data = reactive({
   term: useRoute().params.slug,

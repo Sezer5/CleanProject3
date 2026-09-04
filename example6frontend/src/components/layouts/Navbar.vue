@@ -29,13 +29,23 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/"
-              ><i class="bi bi-person-plus-fill"></i> Register</a
+            <router-link class="nav-link active" aria-current="page" to="/cart"
+              ><i class="bi bi-cart-plus-fill"></i> Cart({{
+                cartStore.cartItems.length
+              }})</router-link
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/"
-              ><i class="bi bi-person-fill"></i> Login</a
+            <router-link
+              class="nav-link active"
+              aria-current="page"
+              to="/register"
+              ><i class="bi bi-person-plus-fill"></i> Register</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link active" aria-current="page" to="/login"
+              ><i class="bi bi-person-fill"></i> Login</router-link
             >
           </li>
           <li class="nav-item dropdown">
@@ -76,10 +86,12 @@
 </template>
 
 <script setup>
+import { useCartStore } from "@/stores/useCartStore";
 import { useProductStore } from "@/stores/useProductStore";
 import { reactive } from "vue";
 
 const productStore = useProductStore();
+const cartStore = useCartStore();
 
 const data = reactive({
   term: "",
